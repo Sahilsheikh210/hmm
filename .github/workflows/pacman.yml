@@ -5,20 +5,26 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 0 * * *" # Runs every day at midnight
-  workflow_dispatch: # Allows you to run it manually from the Actions tab
+    - cron: "0 0 * * *" 
+  workflow_dispatch: 
+
+# Explicitly grant write permissions so the bot can push the SVG
+permissions:
+  contents: write 
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Bumped to v4 to resolve the Node 20 deprecation warning
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
+      # Bumped to v4 to resolve the Node 20 deprecation warning
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20' # Updated your node version to modern standards
 
       - name: Run Script to Generate SVG
         run: node generate.js
